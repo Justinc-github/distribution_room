@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% block link %}
+    {% load static %}
+    <link href="{% static 'css/statistics.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/layui.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
+{% endblock %}
+{% block body %}
+    <header class="header">实时监控</header>
+    <div class="container">
+        <div class="box1">
+            <img src="../static/img/statistics/title_icon.png" alt="">注意事项:
+            <p id="last_data"></p>
+            <p>测试2</p>
+            <p>测试3</p>
+            <p>测试4</p>
+            <p>测试5</p>
+            <p>测试6</p>
+            <p>测试7</p>
+            <p>测试8</p>
+            <p>测试9</p>
+            <p>测试10</p>
+            <p>测试11</p>
+        </div>
+        <div class="right-column">
+            <div class="top-row">
+                <div id="main01_" class="box2">
+                    <div style="display:  flex;  align-items:  center;">
+                        <img src="../static/img/statistics/title_icon.png" alt="Icon"
+                             style="display:  inline-block;  vertical-align:  middle;">
+                        <span style="vertical-align: middle;">实时温度:</span>
+                    </div>
+                    <div id="main1" style="height:90vh;"></div>
+                </div>
+            </div>
+
+            <div class="box4">
+                <div style="display: flex;  align-items: center;">
+                    <img src="../static/img/statistics/title_icon.png" alt="Icon"
+                         style="display:  inline-block;  vertical-align:  middle;">
+                    <span style="vertical-align: middle;">湿度变化:</span>
+                </div>
+                <div id="main2" style="height:30vh;"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script type="text/javascript">
+        let data1 = [];
+        let value1 = {{ list_data1|safe }};
+        let value2;
+
+
+        let oneSecond = 1000; // 一秒的毫秒数
+        let oneHour = 60 * 60 * oneSecond; // 一小时的毫秒数
+
+        // 初始化数据集，确保有足够的数据覆盖至少过去1小时的时间
+        for (let i = -59; i <= 0; i++) {
+            let value5 = value1[i + 59]
+            // 生成过去1小时内的数据点
+            let now = new Date(new Date().getTime() + i * 5 * oneSecond);
+            data1.push(randomData(now, value5));
+        }
+
+
+        // 基于准备好的dom，初始化echarts实例
+        const myChart = echarts.init(document.getElementById('main1'));
+        let option = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                type: 'time',
+                splitLine: {
+                    show: false
+                },
+                minInterval: oneSecond, // 设置 x 轴最小单位为 1 秒
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%'],
+                splitLine: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: '温度',
+                    type: 'line',
+                    showSymbol: false,
+                    data: data1
+                },
+            ]
+        };
+
+        function randomData(now, value, isSecondLine = false) {
+            return {
+                name: now.toString(),
+                value: [
+                    now,
+                    value
+                ]
+            };
+        }
+
+        // 定时器，每分钟更新一次数据
+        setInterval(function () {
+            let now = new Date(); // 使用实际的当前时间
+            data1.shift(); // 移除最旧的数据点
+            data1.push(randomData(now, value2)); // 添加新的数据点使用当前时间
+            myChart.setOption({
+                xAxis: {
+                    min: new Date(now.getTime() - 5 * 60 * oneSecond) // 设置 x 轴最小值为当前时间前 5分钟
+                },
+                series: [
+                    {
+                        data: data1
+                    },
+                ]
+            });
+        }, oneSecond * 5); // 每5秒执行一次
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        function updateData() {
+            fetch("{% url 'statistics:get_latest_data' %}")
+                .then(response => response.json())
+                .then(data => {
+                    const tem = data.tem;
+                    const humidity = data.humidity;
+                    value2 = tem;
+                    document.getElementById('last_data').innerHTML = "字段1: " + tem + " - 字段2: " + humidity;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 页面加载完成后立即执行更新数据
+        document.addEventListener("DOMContentLoaded", function () {
+            updateData();  // 首次加载数据
+
+            // 每隔5秒更新一次数据
+            setInterval(function () {
+                updateData();
+            }, 5000);  // 5秒
+        });
+    </script>
+    <script type="text/javascript">
+        let data2 = [];
+        let value3 = {{ list_data2|safe }};
+        let value4;
+
+
+        // 初始化数据集，确保有足够的数据覆盖至少过去1小时的时间
+        for (let i = -59; i <= 0; i++) {
+            let value6 = value3[i + 59]
+            // 生成过去1小时内的数据点
+            let now = new Date(new Date().getTime() + i * 5 * oneSecond);
+            data2.push(randomData(now, value6));
+        }
+
+
+        // 基于准备好的dom，初始化echarts实例
+        const myChart2 = echarts.init(document.getElementById('main2'));
+        let option2 = {
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                type: 'time',
+                splitLine: {
+                    show: false
+                },
+                minInterval: oneSecond, // 设置 x 轴最小单位为 1 秒
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%'],
+                splitLine: {
+                    show: false
+                }
+            },
+            series: [
+                {
+                    name: '湿度',
+                    type: 'line',
+                    showSymbol: false,
+                    data: data2
+                },
+            ]
+        };
+
+        function randomData(now, value, isSecondLine = false) {
+            return {
+                name: now.toString(),
+                value: [
+                    now,
+                    value
+                ]
+            };
+        }
+
+        // 定时器，每分钟更新一次数据
+        setInterval(function () {
+            let now = new Date(); // 使用实际的当前时间
+            data2.shift(); // 移除最旧的数据点
+            data2.push(randomData(now, value4)); // 添加新的数据点使用当前时间
+            myChart2.setOption({
+                xAxis: {
+                    min: new Date(now.getTime() - 5 * 60 * oneSecond) // 设置 x 轴最小值为当前时间前 5分钟
+                },
+                series: [
+                    {
+                        data: data2
+                    },
+                ]
+            });
+        }, oneSecond * 5); // 每5秒执行一次
+        // 使用刚指定的配置项和数据显示图表。
+        myChart2.setOption(option2);
+
+        function updateData2() {
+            fetch("{% url 'statistics:get_latest_data' %}")
+                .then(response => response.json())
+                .then(data => {
+                    value4 = data.humidity;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 页面加载完成后立即执行更新数据
+        document.addEventListener("DOMContentLoaded", function () {
+            updateData2();  // 首次加载数据
+
+            // 每隔5秒更新一次数据
+            setInterval(function () {
+                updateData2();
+            }, 5000);  // 5秒
+        });
+    </script>
+
+{% endblock %}

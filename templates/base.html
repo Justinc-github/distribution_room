@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>distribution_room</title>
+    <link href="{% static 'css/layui.css' %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    {% block link %}
+    {% endblock %}
+</head>
+{% block style %}
+{% endblock %}
+<style>
+    .person {
+        float: right;
+    }
+</style>
+
+<body style="background:url({% static 'img/statistics/bg_body.jpg' %})">
+<ul class="layui-nav layui-bg-black">
+    <li class="layui-nav-item"><a href="/user/1/">员工列表</a></li>
+    <li class="layui-nav-item"><a href="/user/workers/">值班人员</a></li>
+    <li class="layui-nav-item"><a href="/statistics">数据统计</a></li>
+    <li class="layui-nav-item"><a href="/video">监控画面</a></li>
+
+    <li class="layui-nav-item person" style="margin-right: 30px">
+        <a href="#" style="pointer-events: none">
+            {% if request.unicom_username.0 %}
+                {{ request.unicom_username.0 }}
+            {% else %}
+                {{ user_details.0 }}
+            {% endif %}
+        </a>
+        <dl class="layui-nav-child">
+            <dd><a href="{% url 'login:user_details' %}">我的信息</a></dd>
+            <dd><a href="{% url 'index:index_view' %}">退出账号</a></dd>
+        </dl>
+    </li>
+</ul>
+
+
+<div class="layui-form-item search">
+    <form method="get" action="{% url 'search:search_view' 1 %}">
+        <div class="layui-input-group" style="margin:5px auto 0;">
+            <label>
+                <input type="text" placeholder="搜索指定员工" value="{{ word }}" class="layui-input" name="word_">
+            </label>
+            <input class="layui-btn layui-bg-blue" type="submit" value="搜索">
+        </div>
+    </form>
+</div>
+
+{% block body %}
+{% endblock %}
+
+
+<script src="{% static 'js/layui.js' %}"></script>
+{% block js %}
+{% endblock %}
+</body>
+</html>

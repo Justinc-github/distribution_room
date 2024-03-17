@@ -1,0 +1,102 @@
+.header {
+    height: 80px;
+    background: url("../img/statistics/bg_title.png") center top;
+    color: red;
+    font-size: 37px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.right-column {
+    width: 70%;
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box1 {
+    height: 71vh;
+    background: url("../img/statistics/bg_box5.png") center center no-repeat;
+    background-size: cover;
+    width: 29.5%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    color: #00ffb8;
+    font-size: 20px;
+}
+
+.box2 {
+    background: url("../img/statistics/bg_box1.png") right center no-repeat;
+    background-size: cover;
+    height: 30vh;
+    width: 49.9%;
+    position: relative;
+    margin-right: 1px;
+    margin-left: 1px;
+    color: #00ffb8;
+    z-index: 0;
+}
+
+.box3 {
+    background: url("../img/statistics/bg_box1.png") right center no-repeat;
+    background-size: cover;
+    height: 30vh;
+    width: 49.9%;
+    position: relative;
+    margin-right: 1px;
+    margin-left: 1px;
+    color: #00ffb8;
+    z-index: 0;
+    float: right;
+}
+
+.box4 {
+    margin-top: 5px;
+    height: 40vh;
+    background: url("../img/statistics/bg_box3.png") center center no-repeat;
+    background-size: cover;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    color: #00ffb8;
+    font-size: 15px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+.box1 p {
+    text-align: center;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-bottom: 3px dashed #00b2ff; /* 添加下划线 */
+    padding-bottom: 10px; /* 增加一些间距 */
+}
+
+#main01_ {
+    display: flex;
+    flex-direction: column;
+    height: 30vh; /* 调整整体高度为30视口高度 */
+    width: 100%; /* 如果需要，可以设置宽度 */
+}
+
+#main01_ img {
+    max-height: 2vh; /* 调整图片最大高度，确保图片不会超出其容器 */
+    max-width: 2%; /* 图片最大宽度调整为100%，但实际显示大小将由max-height控制 */
+    display: inline-block; /* 图片以内联块显示 */
+    vertical-align: middle; /* 垂直居中对齐 */
+}
+
+#main1_ > div {
+    flex-grow: 1; /* 使图表容器填充剩余空间 */
+    width: 100%; /* 宽度为100% */
+}

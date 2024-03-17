@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block style %}
+    <style>
+    #video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+{% endblock %}
+{% block body %}
+      <video id="video" width="640" height="480"
+             style="width: 640px;height: 480px;" autoplay></video>
+      <script type="text/javascript">
+          const video = document.getElementById('video');
+
+          if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+               video.srcObject = stream;
+            })
+            .catch(function (err0r) {
+               console.log("Something went wrong!");
+            });
+         }
+      </script>
+{% endblock %}

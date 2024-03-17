@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block link %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/work_time.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="duty_officer" style="color: #0078d7">
+        登录成功,我的详细信息:
+    </div>
+    <table class="layui-table" style="color: white">
+        <colgroup>
+            <col width="150">
+            <col width="150">
+            <col>
+        </colgroup>
+        <thead style="background: #0078d7">
+        <tr>
+            <th style="text-align: center">姓名</th>
+            <th style="text-align: center">年龄</th>
+            <th style="text-align: center">薪资</th>
+            <th style="text-align: center">电话</th>
+            <th style="text-align: center">入职时间</th>
+            <th style="text-align: center">性别</th>
+            <th style="text-align: center">薪资</th>
+        </tr>
+        </thead>
+        <tbody style="background: #173e5d">
+        {% for detail in user_details %}
+            <tr>
+                <td style="text-align: center">{{ detail.name }}</td>
+                <td style="text-align: center">{{ detail.age }}</td>
+                <td style="text-align: center">{{ detail.salary }}</td>
+                <td style="text-align: center">{{ detail.tel }}</td>
+                <td style="text-align: center">{{ detail.create_time }}</td>
+                <td style="text-align: center">{{ detail.get_gender_display }}</td>
+                <td style="text-align: center"><a href="/user/1/{{ detail.id }}/" style="color: white">查看</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

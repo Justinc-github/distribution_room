@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}"/>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <script>document.documentElement.className = "js";
+    const supportsCssVars = function () {
+        let e;
+        const t = document.createElement("style");
+        return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e
+    };
+    supportsCssVars() || alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+</head>
+<body>
+<main>
+    <div class="content">
+        <article class="content__item">
+            <div class="img-wrap img-wrap--content">
+                <div class="img img--content" style="background-image: url({% static 'img/index/1.jpg' %});"></div>
+            </div>
+            <header class="content__item-header">
+                <span class="content__item-header-meta">特高压供电</span>
+                <h2 class="content__item-header-title">配电室</h2>
+            </header>
+            <div class="content__item-copy">
+                <h2>高压配电室概述</h2>
+                <p>
+                    高压配电室是电力系统中的一个核心部分，主要负责接收高压电力，通过变压器降低电压后分配给各用电设备或低压配电系统。它广泛应用于工业企业、大型商业建筑、居民区等需要大量电力供应的场所。</p>
+                <h3>主要组成</h3>
+                <ul>
+                    <li><strong>高压进线柜：</strong>接收外来高压电源，配备断路器。</li>
+                    <li><strong>高压开关柜：</strong>含高压断路器、隔离开关等，用于电路控制和保护。</li>
+                    <li><strong>变压器：</strong>实现高压电力向低压电力的转换。</li>
+                    <li><strong>低压配电柜：</strong>分配经变压器降压后的电力至各用电点。</li>
+                    <li><strong>测量和保护装置：</strong>监测系统状态，保障设备和人员安全。</li>
+                </ul>
+
+                <h3>功能与作用</h3>
+                <ul>
+                    <li>电力接收与分配：作为电力系统的重要节点。</li>
+                    <li>电压转换：满足不同用电设备的电压需求。</li>
+                    <li>保障供电安全：通过保护装置和规程确保安全稳定供电。</li>
+                    <li>提高供电效率：合理设计以减少能量损耗。</li>
+                </ul>
+
+                <h3>安全管理要点</h3>
+                <ul>
+                    <li>遵守操作规程：确保操作人员专业培训和规范操作。</li>
+                    <li>定期检查维护：保持设备良好运行状态。</li>
+                    <li>有效防护措施：设置警示标志，采取隔离措施。</li>
+                    <li>紧急处理预案：制定并执行应急预案，快速有效应对事故。</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="content__item">
+            <div class="img-wrap img-wrap--content">
+                <div class="img img--content" style="background-image: url({% static 'img/index/2.jpg' %});"></div>
+            </div>
+            <header class="content__item-header">
+                <span class="content__item-header-meta">流程自动化</span>
+                <h2 class="content__item-header-title">巡检机器人</h2>
+            </header>
+            <div class="content__item-copy">
+                <h2>巡检机器人简介</h2>
+                <p>
+                    自动巡检机器人是一种高科技装备，它结合了机器视觉、人工智能（AI）、传感器技术和自动导航系统，旨在执行监控任务以提高安全性、效率和精确性。这类机器人在多个领域中发挥着越来越重要的作用。以下是对自动监控机器人的详细介绍，包括其主要功能、组成部分以及应用场景。
+                <h3>主要功能</h3>
+                <ul>
+                    <li><strong>环境监测：</strong>通过搭载的传感器收集环境数据，如温度、湿度、有害气体浓度等。</li>
+                    <li><strong>视频监控：</strong>利用高清摄像头进行实时视频录制和远程传输，用于安全监控和远程巡查。</li>
+                    <li><strong>异常检测：</strong>通过AI算法分析监控数据，自动识别异常事件或潜在风险，并及时报警。</li>
+                    <li><strong>自主导航：</strong>通过对路径的规划提高其工作效率以更好的完成任务。</li>
+                </ul>
+
+                <h3>组成部分</h3>
+                <ul>
+                    <li><strong>传感器模块：</strong>包括温度传感器、湿度传感器、气体检测传感器等，用于收集环境数据。</li>
+                    <li><strong>视觉系统：</strong>包括一套或多套高清摄像头，用于捕捉视频图像，有时还可以配备有红外或夜视功能以适应不同的监控需求。
+                    </li>
+                    <li><strong>控制系统：</strong>核心处理单元，负责协调各模块的工作，执行数据处理和决策算法。。</li>
+                    <li><strong>通讯模块：</strong>支持Wi-Fi、4G/5G等无线通信技术，实现数据的远程传输和接收。</li>
+                </ul>
+            </div>
+        </article>
+
+        <article class="content__item">
+            <div class="img-wrap img-wrap--content">
+                <div class="img img--content" style="background-image: url({% static 'img/index/3.jpg' %});"></div>
+            </div>
+            <header class="content__item-header">
+                <span class="content__item-header-meta">适用范围广</span>
+                <h2 class="content__item-header-title">应用场景</h2>
+            </header>
+            <div class="content__item-copy">
+                <h2>应用场景简介</h2>
+                <p>自动监控机器人的应用场景广泛，它们能够在多个领域发挥关键作用，提高效率、安全性和准确性。以下是一些主要的应用场景介绍：
+                <ul>
+                    <li><strong>工业巡检：</strong>在制造业和生产工厂中，自动监控机器人可以进行设备和生产线的定期巡查，实时监测设备状态、温度、振动等关键指标。通过早期发现潜在的故障和异常，这些机器人有助于减少停机时间，提高生产效率，确保员工安全。
+                    </li>
+                    <li><strong>仓库管理：</strong>在物流和仓储行业，自动监控机器人可以用于货物的自动盘点、环境监测（如温湿度控制）、以及安全巡查。它们能够提高仓库管理的自动化水平，减少人工错误，优化库存管理，从而降低成本并提升运营效率。
+                    </li>
+                    <li><strong>环境监测：</strong>自动监控机器人还可以应用于环境保护和监测领域，例如监测空气质量、水质、野生动物活动等。它们可以在广阔或难以到达的区域进行长期稳定的数据收集，为环境保护工作提供科学依据。
+                    </li>
+                    <li><strong>农业管理：</strong>在现代农业中，自动监控机器人可用于田间监测，包括作物健康检测、病虫害预警、土壤湿度监测等。这些机器人通过提供精准的农业数据，支持精准农业管理，帮助农民提高产量，减少资源浪费。
+                    </li>
+                </ul>
+            </div>
+        </article>
+
+
+        <article class="content__item">
+            <div class="img-wrap img-wrap--content">
+                <div class="img img--content" style="background-image: url({% static 'img/index/4.jpg' %});"></div>
+            </div>
+            <header class="content__item-header">
+                <span class="content__item-header-meta">优势显著</span>
+                <h2 class="content__item-header-title">优势介绍</h2>
+            </header>
+            <div class="content__item-copy">
+                <p>
+                    自动监控机器人在多个领域的应用带来了显著的优势，这些优势不仅提高了工作效率和安全性，还能够实现成本节约和精确度提升。以下是自动监控机器人的一些主要优势：
+                <ul>
+                    <li><strong>高效性：</strong>自动监控机器人能够24小时不间断工作，与人类相比，它们可以更加持续和稳定地执行监控任务。这种高效性特别适用于需要长时间持续监控的场景，如公共安全监控、工业设施巡检等。
+                    </li>
+                    <li><strong>成本节约：</strong>虽然初期投入可能较高，但长期来看，自动监控机器人能够显著降低人力成本和运营成本。通过减少对人力资源的依赖，企业可以将资金投入到其他关键领域，从而提高整体运营效率。
+                    </li>
+                    <li><strong>提高安全性：</strong>得益于以高精度执行监测和数据收集任务。它们能够减少人为错误，提供更加准确和一致的数据，从而提高决策的质量。
+                    </li>
+                    <li><strong>灵活性和扩展性：</strong>自动监控机器人的设计允许快速适应不同的应用需求和环境变化。通过简单的编程和配置，它们可以轻松地从一个任务转换到另一个任务，或者根据特定需求进行定制，这为用户提供了极大的灵活性和扩展性。自动监控机器人的设计允许快速适应不同的应用需求和环境变化。通过简单的编程和配置，它们可以轻松地从一个任务转换到另一个任务，或者根据特定需求进行定制，这为用户提供了极大的灵活性和扩展性。
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </div>
+    <div class="revealer">
+        <div class="revealer__inner"></div>
+    </div>
+    <div class="grid grid--slideshow">
+        <figure class="grid__item grid__item--slide">
+            <span class="number">01</span>
+            <div class="img-wrap">
+                <div class="img" style="background-image: url({% static 'img/index/1.jpg' %});"></div>
+            </div>
+            <figcaption class="caption">特高压供电</figcaption>
+        </figure>
+        <figure class="grid__item grid__item--slide">
+            <span class="number">02</span>
+            <div class="img-wrap">
+                <div class="img" style="background-image: url({% static 'img/index/2.jpg' %});"></div>
+            </div>
+            <figcaption class="caption">自动化流程</figcaption>
+        </figure>
+        <figure class="grid__item grid__item--slide">
+            <span class="number">03</span>
+            <div class="img-wrap">
+                <div class="img" style="background-image: url({% static 'img/index/3.jpg' %});"></div>
+            </div>
+            <figcaption class="caption">适用范围广</figcaption>
+        </figure>
+        <figure class="grid__item grid__item--slide">
+            <span class="number">04</span>
+            <div class="img-wrap">
+                <div class="img" style="background-image: url({% static 'img/index/4.jpg' %});"></div>
+            </div>
+            <figcaption class="caption">优势显著</figcaption>
+        </figure>
+        <div class="titles-wrap">
+            <div class="grid grid--titles">
+                <h3 class="grid__item grid__item--title">配电室</h3>
+                <h3 class="grid__item grid__item--title">机器人</h3>
+                <h3 class="grid__item grid__item--title">应用场景</h3>
+                <h3 class="grid__item grid__item--title">优势</h3>
+            </div>
+        </div>
+        <div class="grid grid--interaction">
+            <div class="grid__item grid__item--cursor grid__item--left"></div>
+            <div class="grid__item grid__item--cursor grid__item--center"></div>
+            <div class="grid__item grid__item--cursor grid__item--right"></div>
+        </div>
+    </div>
+    <div class="frame">
+        <div class="frame__title-wrap">
+            <h1 class="frame__title">工作人员点击这里进行操作</h1>
+            <div class="frame__links">
+                <a href="/login">登录</a>
+            </div>
+            <div class="frame__mode" role="radiogroup">
+                <div class="frame__mode-item frame__mode-item--dark">
+                    <input id="mode-1" type="radio" name="mode" class="frame__mode-input">
+                    <label class="frame__mode-label" for="mode-1">Dark mode</label>
+                </div>
+                <div class="frame__mode-item">
+                    <input id="mode-2" type="radio" name="mode" class="frame__mode-input" checked>
+                    <label class="frame__mode-label frame__mode-label--light" for="mode-2">Light mode</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="{% static 'js/index/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'js/index/charming.min.js' %}"></script>
+<script src="{% static 'js/index/TweenMax.min.js' %}"></script>
+<script src="{% static 'js/index/demo.js' %}"></script>
+
+
+</body>
+</html>

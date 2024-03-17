@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block link %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/user_list.css' %}">
+{% endblock %}
+{% block body %}
+    <table class="layui-table" style="color:white;">
+        <colgroup>
+            <col width="150">
+            <col width="150">
+            <col>
+        </colgroup>
+        <thead style="background: #0078d7">
+        <tr>
+            <th style="text-align: center">姓名</th>
+            <th style="text-align: center">年龄</th>
+            <th style="text-align: center">电话</th>
+            <th style="text-align: center">性别</th>
+            <th style="text-align: center">值班时间</th>
+        </tr>
+        </thead>
+        <tbody style="background: #173e5d">
+        {% for dynamic in dynamics %}
+            <tr>
+                <td style="text-align: center">{{ dynamic.name }}</td>
+                <td style="text-align: center">{{ dynamic.age }}</td>
+                <td style="text-align: center">{{ dynamic.tel }}</td>
+                <td style="text-align: center">{{ dynamic.get_gender_display }}</td>
+                <td style="text-align: center"><a href="{{ dynamic.id }}" style="color:white;">查看</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="page_next" id="demo-laypage-normal-2">
+        <div class="layui-box layui-laypage layui-laypage-default"
+             id="layui-laypage-25">
+            {% if dynamics.has_previous %}
+                <a href="{% url 'user:user_view' 1 %}"
+                   class="layui-laypage-prev" data-page="0" style="background: #173e5d;color: white">首页</a>
+
+            {% else %}
+                <a style="pointer-events:none;background: #173e5d"
+                   class="layui-laypage-prev layui-disabled" data-page="0">首页</a>
+            {% endif %}
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-25">
+            {% if dynamics.has_previous %}
+                <a href="{% url 'user:user_view' dynamics.previous_page_number %}"
+                   class="layui-laypage-prev" data-page="0" style="background:#173e5d;color: white">上一页</a>
+            {% else %}
+                <a style="pointer-events:none;background:#173e5d;color: white"
+                   class="layui-laypage-prev layui-disabled" data-page="0" >上一页</a>
+            {% endif %}
+
+            {% for i in page_list %}
+                {% if i == page %}
+                    <span id="page1" class="layui-laypage-curr"><em
+                            class="layui-laypage-em" style="background: #0078d7;color: white"></em><em>{{ i }}</em></span>
+                {% else %}
+                    <a href="{% url 'user:user_view' i %}" style="background:#173e5d;color: white">{{ i }}</a>
+                {% endif %}
+            {% endfor %}
+
+
+            {% if dynamics.has_next %}
+                <a href="{% url 'user:user_view' dynamics.next_page_number %}"
+                   class="layui-laypage-prev" data-page="0" style="background:#173e5d;color: white">下一页</a>
+            {% else %}
+                <a style="pointer-events:none;background:#173e5d;color: white"
+                   class="layui-laypage-prev layui-disabled" data-page="0" >下一页</a>
+            {% endif %}
+        </div>
+
+        <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-25">
+            {% if paginator.num_pages != dynamics.number %}
+                <a href="{% url 'user:user_view' paginator.num_pages %}"
+                   class="layui-laypage-prev" data-page="0"
+                   style="background: #173e5d;color: white">尾页/{{ paginator.num_pages }}</a>
+            {% else %}
+                <a style="pointer-events:none; background: #173e5d;color: white"
+                   class="layui-laypage-prev layui-disabled" data-page="0">尾页</a>
+            {% endif %}
+        </div>
+
+        <a href="" style="pointer-events:none;" class="page_num layui-disabled"
+           data-page="0">共{{ paginator.num_pages }}页</a>
+    </div>
+{% endblock %}
