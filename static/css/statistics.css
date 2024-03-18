@@ -32,7 +32,7 @@
     position: relative;
     z-index: 1;
     color: #00ffb8;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .box2 {
@@ -75,7 +75,7 @@
 }
 
 .box1 p {
-    text-align: center;
+    text-align: left;
     margin-left: 3px;
     margin-right: 3px;
     border-bottom: 3px dashed #00b2ff; /* 添加下划线 */

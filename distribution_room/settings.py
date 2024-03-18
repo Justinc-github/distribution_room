@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-9%3*@ks*2_11b+ws+(x=-no34wpnl6hg7si-uf7$x($q41zacd"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -126,8 +126,8 @@ USE_TZ = False
 
 # 静态资源文件路径
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / 'static']
-# STATIC_ROOT = BASE_DIR / 'static'
+# STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'static'
 
 # 媒体资源保存路径
 MEDIA_URL = '/media/'
