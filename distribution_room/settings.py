@@ -24,8 +24,6 @@ SECRET_KEY = "django-insecure-9%3*@ks*2_11b+ws+(x=-no34wpnl6hg7si-uf7$x($q41zacd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -83,8 +81,8 @@ DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',  # 使用mysql引擎
         'NAME': 'distribution_room',  # 链接数据库的名称
-        'USER': 'root',  # 数据库的用户名
-        'PASSWORD': 'SJCsjc0315',  # 数据库密码
+        'USER': 'justinc',  # 数据库的用户名
+        'PASSWORD': '123123',  # 数据库密码
         'HOST': '42.193.123.49',  # 链接主机
         'PORT': '3306',  # 链接接端口
     }
