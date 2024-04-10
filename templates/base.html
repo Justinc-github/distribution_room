@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>distribution_room</title>
     <link href="{% static 'css/layui.css' %}" rel="stylesheet">
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="shortcut icon" href="{% static 'img/enroll/favicon.ico' %}">
     {% block link %}
     {% endblock %}
 </head>
@@ -35,6 +35,7 @@
         </a>
         <dl class="layui-nav-child">
             <dd><a href="{% url 'login:user_details' %}">我的信息</a></dd>
+            <dd><a href="{% url 'user:user_modify' %}">修改密码</a></dd>
             <dd><a href="{% url 'index:index_view' %}">退出账号</a></dd>
         </dl>
     </li>

@@ -2,17 +2,13 @@
 {% block link %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/work_time.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/enroll/favicon.ico' %}" type="image/x-icon">
 {% endblock %}
 {% block body %}
-    <div class="duty_officer" style="color: #0078d7">
+    <div class="duty_officer" style="color: #0078d7;display: inline-block">
         登录成功,我的详细信息:
     </div>
-    <table class="layui-table" style="color: white">
-        <colgroup>
-            <col width="150">
-            <col width="150">
-            <col>
-        </colgroup>
+    <table class="layui-table" style="color: white;width: 50%;margin-left: auto;margin-right: auto">
         <thead style="background: #0078d7">
         <tr>
             <th style="text-align: center">姓名</th>
@@ -38,7 +34,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-
-
 {% endblock %}

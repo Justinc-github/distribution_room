@@ -31,8 +31,8 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <form id="login-form" action="{% url 'login:login_view' %}" method="post"
-                                          role="form" style="display: block;">
+                                    <form id="enroll-form" action="{% url  'login:enroll' %}" method="post" role="form"
+                                          style="display:  block;" onsubmit="return  handleFormSubmit(event);">
                                         {% csrf_token %}
                                         <div class="form-group">
                                             <label class="icon-lp" style="margin: 6px 0 0 7px">
@@ -55,6 +55,23 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label class="icon-lp" style="margin: 6px 0 0 7px">
+                                                <i class="layui-icon layui-icon-friends"></i>
+                                            </label>
+                                            <input type="text" name="name" id="name" tabindex="2"
+                                                   class="form-control" placeholder="姓名" required="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="icon-lp" style="margin: 6px 0 0 7px">
+                                                <i class="layui-icon layui-icon-cellphone"></i>
+                                            </label>
+                                            <input type="text" name="phone" id="phone" tabindex="2"
+                                                   class="form-control" placeholder="电话" required
+                                                   pattern="^1\d{10}$">
+                                        </div>
+
+                                        <div class="form-group">
                                             <div class="row">
                                                 <div class="col-sm-7">
                                                     <label class="icon-lp" style="margin: 6px 0 0 7px">
@@ -73,17 +90,21 @@
                                             </div>
                                         </div>
 
+
                                         <div class="form-group">
                                             <div class="row">
+                                                <!--    登录按钮    -->
                                                 <div class="col-sm-6">
-                                                    <input type="submit" name="login-submit" id="login-submit"
-                                                           tabindex="4" class="form-control btn btn-login" value="登录">
+                                                    <a class="form-control  btn  btn-login"
+                                                       style="height:  100%;  color:  white"
+                                                       href="{% url  "login:login_view" %}">登录</a>
                                                 </div>
 
+                                                <!--    注册按钮    -->
                                                 <div class="col-sm-6">
-                                                    <a class="form-control btn btn-login"
-                                                       style="height: 100%; color: white"
-                                                       href="{% url "login:enroll" %}">注册</a>
+                                                    <input type="submit" name="enroll-submit" id="enroll-submit"
+                                                           tabindex="4" class="form-control  btn  btn-login"
+                                                           value="注册">
                                                 </div>
                                             </div>
                                         </div>
@@ -121,14 +142,7 @@
             $(this).addClass('active');
             e.preventDefault();
         });
-    });
-
-    $('.form-group input').focus(function () {
-        $(this).parent().addClass('addcolor');
-    }).blur(function () {
-        $(this).parent().removeClass('addcolor');
-    });
-
+    })
 
     document.getElementById('captchaImg').addEventListener('click', function () {
         //  调用后端视图函数以获取新的captcha图像

@@ -1,1 +1,52 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/work_time.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="duty_officer" style="color: #0078d7">
+        原账号密码:
+    </div>
+    <table class="layui-table" style="color: white; width: 50%;margin-left:auto;margin-right: auto;margin-top: 3%">
+        <thead style="background: #0078d7">
+        <tr>
+            <th style="text-align: center">账号</th>
+            <th style="text-align: center">密码</th>
+        </tr>
+        </thead>
+        <tbody style="background: #173e5d">
+        {% for message in user_mine %}
+            <tr>
+                <td style="text-align: center">{{ message.username }}</td>
+                <td style="text-align: center">{{ message.password }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="duty_officer" style="color: #0078d7">
+        请输入新的账号密码:
+    </div>
+    <form method="post" style="width:  50%;margin-left:  auto;margin-right:  auto;margin-top:  5%">
+        {% csrf_token %}
+        <div class="form-group">
+            <table class="layui-table" style="color:  white">
+                <thead style="background:  #0078d7">
+                <tr>
+                    <th style="text-align:  center">账号</th>
+                    <th style="text-align:  center">密码</th>
+                </tr>
+                </thead>
+            </table>
+            <div style="margin-bottom:  10px;">
+                <input type="text" id="account" placeholder="请输入新的账号"
+                       name="account" style="width:  49.2%;margin-left:  auto;margin-right:  auto;height:  38px">
+                <input type="text" id="password" placeholder="请输入新的密码"
+                       name="password" style="width:  49.2%;margin-left:  auto;margin-right:  auto;height:  38px">
+            </div>
+        </div>
+        <button type="submit" class="btn  btn-success" id="addOneBtn"
+                style="float:  right;margin-top:  10px;height:  50px;width:70px;background:  #0078d7;color:  white">
+            确认修改
+        </button>
+    </form>
+{% endblock %}

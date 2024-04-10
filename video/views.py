@@ -10,7 +10,8 @@ def webcam_view(request):
 
 
 def webcam_feed(request):
-    cap = cv2.VideoCapture(0)
+    url = "749839wx55.goho.co"
+    cap = cv2.VideoCapture(url)
 
     if not cap.isOpened():
         print("Error: Could not open camera.")
@@ -31,4 +32,4 @@ def webcam_feed(request):
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-    return StreamingHttpResponse(generate_frames(), content_type="multipart/x-mixed-replace;boundary=frame")
+    return StreamingHttpResponse(generate_frames(), content_type="multipa rt/x-mixed-replace;boundary=frame")

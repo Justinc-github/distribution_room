@@ -1,9 +1,9 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from login.views import EnrollForm
 from user import models as user_models
 from django.core.paginator import Paginator
 import datetime
-from login import models
+from login import models as login_models
 
 
 def user_view(request, page):
@@ -68,14 +68,31 @@ def workers(request):
 
 def user_details(request):
     user_info_from_session = request.session.get("info", {})
-    user_id = user_info_from_session.get("id")
-    user_details = user_models.UserInfo.objects.filter(id=user_id)
+    user_tel = user_info_from_session.get("tel")
+    user_details = user_models.UserInfo.objects.filter(tel=user_tel)
     return render(request, 'user_details.html', {
         "user_details": user_details,
     })
 
 
 def user_modify(request):
-    return render(request, 'user_modify.html', {
+    user_info_from_session = request.session.get("info", {})
+    user_tel = user_info_from_session.get("tel")
+    user_mine = login_models.user_login.objects.filter(phone=user_tel).values()
 
-    })
+    if request.method == 'POST':
+        form = EnrollForm(request.POST)
+        user_instance = login_models.user_login.objects.get(phone=user_tel)
+        try:
+            new_username = form.data['title'][0]
+            new_password = form.data['title'][0]
+        except KeyError:
+            return render(request, 'error.html')
+        user_mine[0]['username'] = new_username
+        user_mine[0]['password'] = new_password
+        user_instance.username = new_username
+        user_instance.password = new_password
+        user_instance.save()
+        request.session.clear()
+        return redirect("/")
+    return render(request, 'user_modify.html', {"user_mine": user_mine})

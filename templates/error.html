@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>错误</title>
+    <link rel="shortcut icon" href="{% static 'img/enroll/favicon.ico' %}">
+</head>
+<body style="background:url({% static 'img/statistics/bg_body.jpg' %})">
+<div style="color: red;text-align: center;font-size: 50px;margin-top: 14%">用户名或密码未填写完整，请返回重新修改!!!</div>
+
+<div style="color: white;text-align: center;font-size: 50px;margin-top: 14%"><a href="{% url 'user:user_modify' %}" style="text-decoration: none">返回</a></div>
+</body>
+</html>

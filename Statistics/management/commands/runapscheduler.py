@@ -10,6 +10,7 @@ import socket
 from pyModbusTCP.client import ModbusClient
 from django.shortcuts import render
 from Statistics.models import value
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -17,13 +18,15 @@ logger = logging.getLogger(__name__)
 def my_job(request=None):  # 修改任务名称位置
     url = "749839wx55.goho.co"
     ip_address = socket.gethostbyname(url)
-    ModbusBMS = ModbusClient(host=ip_address, port=45890, unit_id=1, auto_open=True, auto_close=False)
-    data = ModbusBMS.read_holding_registers(0, 16)
+    ModbusBMS = ModbusClient(host=ip_address, port=42352, unit_id=1, auto_open=True, auto_close=False)
+    data = ModbusBMS.read_holding_registers(0, 2)
+    current_time = datetime.datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     print(data[0]/10)
     print(data[1]/10)
     data1 = data[1]/10.0
     data2 = data[0]/10.0
-    data = value(tem=data1, humidity=data2)
+    data = value(tem=data1, humidity=data2, time=formatted_time)
     data_change = [data1, data2]
     data.save()
     print(data_change)

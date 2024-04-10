@@ -1,8 +1,22 @@
+import re
+
 from django import forms
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from login import models as login_models
 from user import models as user_models
+from login.code.code import create_captcha_content
+from io import BytesIO
+
+
+class EnrollForm(forms.ModelForm):
+    username = forms.CharField(label="用户名", widget=forms.TextInput(attrs={"class": "form-control"}))
+    password = forms.CharField(label="密码", widget=forms.PasswordInput(attrs={"class": "form-control"}))
+
+    class Meta:
+        model = login_models.user_login
+        fields = ['username', 'password', 'name', 'phone']
 
 
 class LoginForm(forms.Form):
@@ -10,29 +24,67 @@ class LoginForm(forms.Form):
     password = forms.CharField(label="密码", widget=forms.PasswordInput(attrs={"class": "form-control"}))
 
 
+def enroll(request):
+    form = EnrollForm(request.POST)
+    if request.method == "GET":
+        form = EnrollForm()
+        return render(request, "enroll.html", {"form": form})
+
+    try:
+        if request.session['image_code'] != form.data['Captcha']:
+            error_message = "验证码错误，请重新输入。"
+            return render(request, "login.html", {"error_message": error_message, "form": form})
+    except KeyError:
+        error_message = "验证码过期，请重新注册。"
+        return render(request, "login.html", {"error_message": error_message})
+
+    if form.is_valid():
+        form.save()
+        return render(request, "login.html", {"form": form})
+    return render(request, "enroll.html", {"form": form})
+
+
 def login(request):
     if request.method == "GET":
         form = LoginForm()
         return render(request, "login.html", {"form": form})
-
     form = LoginForm(data=request.POST)
+    user_login = login_models.user_login.objects.filter(username=form.data['username'],
+                                                        password=form.data['password']).first()
+    try:
+        if request.session['image_code'] != form.data['Captcha']:
+            error_message = "验证码错误，请重新输入。"
+            return render(request, "login.html", {"error_message": error_message})
+    except KeyError:
+        error_message = "验证码过期，请重新登录。"
+        return render(request, "login.html", {"error_message": error_message})
     if form.is_valid():
         # 去数据库校验
         admin_object = login_models.user_login.objects.filter(**form.cleaned_data).first()
+
         if not admin_object:
             # 添加一个错误提示
             form.add_error("password", "用户名或者密码错误")
             return render(request, "login.html", {"form": form})
-        user_details = user_models.UserInfo.objects.filter(id=admin_object.id)
+        user_details = user_models.UserInfo.objects.filter(tel=user_login.phone)
         # 将生成的字符串存储在cookie和session中
-        request.session["info"] = {"id": admin_object.id, "name": admin_object.username,
-                                   "password": admin_object.password}
+        request.session["info"] = {"tel": user_login.phone, "name": user_login.username,
+                                   "password": user_login.password}
         # 时效性为7天
         request.session.set_expiry(60 * 60 * 24 * 7)
         return render(request, "user_details.html", {
             "user_details": user_details,
         })
     return render(request, "login.html", {"form": form})
+
+
+def image_code(request):
+    image, text = create_captcha_content()
+    request.session["image_code"] = text
+    request.session.set_expiry(60)
+    stream = BytesIO()
+    image.save(stream, "png")
+    return HttpResponse(stream.getvalue())
 
 
 def logout(request):
