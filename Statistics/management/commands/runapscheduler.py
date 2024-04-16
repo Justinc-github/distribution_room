@@ -16,9 +16,9 @@ logger = logging.getLogger(__name__)
 
 
 def my_job(request=None):  # 修改任务名称位置
-    url = "749839wx55.goho.co"
+    url = "74983955mm.vicp.fun"
     ip_address = socket.gethostbyname(url)
-    ModbusBMS = ModbusClient(host=ip_address, port=42352, unit_id=1, auto_open=True, auto_close=False)
+    ModbusBMS = ModbusClient(host=ip_address, port=18786, unit_id=1, auto_open=True, auto_close=False)
     data = ModbusBMS.read_holding_registers(0, 2)
     current_time = datetime.datetime.now()
     formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -55,7 +55,7 @@ class Command(BaseCommand):
             my_job,  # 修改任务名称位置
             trigger=CronTrigger(second="*/5"),  # 时间
             id="my_job",  # The `id` assigned to each job MUST be unique
-            max_instances=1,
+            max_instances=5,
             replace_existing=True,
         )
         logger.info("Added job 'my_job'.")  # 修改任务名称位置
@@ -66,7 +66,7 @@ class Command(BaseCommand):
                 hour="00", minute="00"
             ),  # 每天的零点执行清理任务
             id="delete_old_job_executions",
-            max_instances=1,
+            max_instances=5,
             replace_existing=True,
         )
         logger.info(
