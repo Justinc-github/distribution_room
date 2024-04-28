@@ -14,4 +14,8 @@ urlpatterns = [
     path('logout/', logout, name='logout'),
 
     path('code/', image_code, name="image_code"),
+
+    path('retrieve/', retrieve_view, name="retrieve_view"),
+
+    path('', retrieve_return, name="retrieve_return"),
 ]

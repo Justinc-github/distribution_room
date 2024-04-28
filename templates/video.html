@@ -1,79 +1,52 @@
-{#本地摄像头#}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Stream</title>
+</head>
+<body>
+<canvas id="canvas" width="640" height="480"></canvas>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const videoStreamUrl = '/video/video_feed';
+
+// 使用Web Workers来处理视频帧数据
+const worker = new Worker('{% static 'js/videoWorker.js' %}');
+
+function drawFrame(data) {
+  worker.postMessage(data);
+}
+
+// Web Workers处理视频帧并在主线程中绘制
+const workerCallback = (e) => {
+  const {frame, width, height} = e.data;
+  ctx.drawImage(frame, 0, 0, width, height);
+};
+
+worker.onmessage = workerCallback;
+
+async function startVideoStream() {
+  try {
+    const response = await fetch(videoStreamUrl, {mode: 'cors'});
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const reader = response.body.getReader();
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      drawFrame(value);
+    }
+  } catch (error) {
+    console.error('Error fetching video stream:', error);
+  }
+}
+
+window.addEventListener('load', startVideoStream);
+</script>
 
 
-{#{% extends "base.html" %}#}
-{#{% block style %}#}
-{#    <style>#}
-{#        #video {#}
-{#            position: absolute;#}
-{#            top: 50%;#}
-{#            left: 50%;#}
-{#            transform: translate(-50%, -50%);#}
-{#        }#}
-{#    </style>#}
-{#{% endblock %}#}
-{#{% block body %}#}
-{#    <h2 style="color: white;text-align: center;margin-top: 1%;font-size: 50px">摄像头访问</h2>#}
-{#    <video id="video" width="640" height="480"#}
-{#           style="width: 640px;height: 480px;margin-top: 4%" autoplay></video>#}
-{#    <script type="text/javascript">#}
-{#        const video = document.getElementById('video');#}
-{#        if (navigator.mediaDevices.getUserMedia) {#}
-{#            navigator.mediaDevices.getUserMedia({video: true})#}
-{#                .then(function (stream) {#}
-{#                    video.srcObject = stream;#}
-{#                })#}
-{#                .catch(function (err0r) {#}
-{#                    console.log("Something went wrong!");#}
-{#                });#}
-{#        }#}
-{#    </script>#}
-{#{% endblock %}#}
-
-
-{% extends "base.html" %}
-{% block style %}
-    <style>
-        #video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-    </style>
-{% endblock %}
-{% block body %}
-    <h2 style="color: white; text-align: center; margin-top: 1%; font-size: 50px">摄像头访问</h2>
-    <video id="video" width="640" height="480" style="width: 640px; height: 480px; margin-top: 4%;" autoplay></video>
-    <script type="text/javascript">
-        const video = document.getElementById('video');
-        const cameraUrl = '749839wx55.goho.co'; // 替换为您的网络摄像头URL
-
-        if (navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({video: {facingMode: 'environment'}})
-                .then(function (stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function (error) {
-                    console.log("Something went wrong!");
-                });
-        } else if (navigator.mediaDevices.enumerateDevices) {
-            navigator.mediaDevices.enumerateDevices()
-                .then(function (devices) {
-                    let constraints = {
-                        video: {
-                            deviceId: devices.filter(device => device.kind === 'videoinput')[0].deviceId,
-                            facingMode: 'environment'
-                        }
-                    };
-                    return navigator.mediaDevices.getUserMedia(constraints);
-                })
-                .then(function (stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function (error) {
-                    console.log("Something went wrong!");
-                });
-        }
-    </script>
-{% endblock %}
+</body>
+</html>

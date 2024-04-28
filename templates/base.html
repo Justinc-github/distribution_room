@@ -24,13 +24,10 @@
     <li class="layui-nav-item"><a href="/user/workers/">值班人员</a></li>
     <li class="layui-nav-item"><a href="/statistics">数据统计</a></li>
     <li class="layui-nav-item"><a href="/video">监控画面</a></li>
-
     <li class="layui-nav-item person" style="margin-right: 30px">
         <a href="#" style="pointer-events: none">
-            {% if request.unicom_username.0 %}
-                {{ request.unicom_username.0 }}
-            {% else %}
-                {{ user_details.0 }}
+            {% if request.session.info.user %}
+                {{ request.session.info.user  }}
             {% endif %}
         </a>
         <dl class="layui-nav-child">

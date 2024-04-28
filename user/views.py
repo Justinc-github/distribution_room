@@ -96,3 +96,5 @@ def user_modify(request):
         request.session.clear()
         return redirect("/")
     return render(request, 'user_modify.html', {"user_mine": user_mine})
+
+

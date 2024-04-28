@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh" class="no-js">
+{% load static %}
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>找回密码</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/retrieve/normalize.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'font/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/retrieve/demo.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/retrieve/component.css' %}"/>
+    <link rel="shortcut icon" href="{% static 'img/enroll/favicon.ico' %}">
+</head>
+<body style="background:url({% static 'img/statistics/bg_body.jpg' %})">
+
+<header class="codrops-header">
+    <div style="color: white;font-size: 30px; margin: -5% 49% 0 35%;">输入信息找回密码:</div>
+</header>
+<form method="post" style="margin: 0 0 0 30%;">
+    {% csrf_token %}
+    <section class="content">
+				<span class="input input--hoshi">
+                    <input class="input__field input__field--hoshi" name="email" type="email" id="input-1"
+                           value="{{ email }}" required="required" autocomplete="off"/>
+					<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-1">
+						<span class="input__label-content input__label-content--hoshi"
+                        >邮箱</span>
+					</label>
+				</span>
+        <button type="submit" class="btn  btn-success" id="mailbox" lay-on="alert"
+                style="position:absolute; display:inline-block; margin: 15% 0 0 -1%; height: 33px; background:  #1964a4;color:  white;">
+            获取验证码
+        </button>
+    </section>
+    <div class="container">
+            <span class="input input--hoshi" style="position: absolute;
+    margin: -1% 0 0 -34%;">
+					<input class="input__field input__field--hoshi" type="password" name="password1" id="input-3"
+                           required="required" value="{{ password1 }}"
+                           autocomplete="off"/>
+					<label class="input__label input__label--hoshi input__label--hoshi-color-3" for="input-3">
+						<span class="input__label-content input__label-content--hoshi">请输入新密码</span>
+					</label>
+				</span>
+
+
+        <span class="input input--hoshi" style="position: absolute;
+    margin: 3% 0 0 -34%;">
+					<input class="input__field input__field--hoshi" type="password" name="password2" id="input-2"
+                           required="required" value="{{ password2 }}"
+                           autocomplete="off"/>
+					<label class="input__label input__label--hoshi input__label--hoshi-color-3" for="input-2">
+						<span class="input__label-content input__label-content--hoshi">确认新密码</span>
+					</label>
+				</span>
+
+
+        <span class="input input--hoshi" style="position: absolute;margin: 7% 0 0 -34%" >
+					<input class="input__field input__field--hoshi" type="text" name="code" id="input-4" autocomplete="off"/>
+					<label class="input__label input__label--hoshi input__label--hoshi-color-2" for="input-4">
+						<span class="input__label-content input__label-content--hoshi">请输入验证码</span>
+					</label>
+				</span>
+
+        <span class="input input--hoshi" style="position: absolute;margin: -12% 0 0 -35%;">
+            <input class="input__field input__field--hoshi" type="text" name="message" style="color: red" id="input-5"
+                   value="{{ error_message }}" readonly="readonly"/>
+        </span>
+
+    </div>
+
+    <button type="submit" class="btn  btn-success" id="confirm"
+            style="position:absolute; display:inline-block; margin: 13% 0 0 4%; height: 36px;width: 84px;background:  #1964a4;color:  white;">
+        确认
+    </button>
+    <button type="button" class="btn  btn-success" id="return"
+            style="position:absolute; display:inline-block; margin: 13% 0 0 18%; height: 36px;width: 84px;background:  #1964a4;color:  white;">
+        <a href="/login" style="color: white">返回</a>
+    </button>
+</form>
+
+</body>
+<script>
+    //  初始化变量
+    let canClick = true;
+    let lastClickTime = 0;
+    //  获取按钮元素
+    const button1 = document.getElementById('mailbox');
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');  //  获取CSRF令牌
+    //  获取按钮元素
+    const mailboxButton = document.getElementById('mailbox');
+
+
+    //  为按钮添加点击事件
+    button1.addEventListener('click', function (event) {
+        //  当前时间
+        const currentTime = new Date().getTime();
+
+        //  检查是否可以点击按钮
+        if (canClick || (currentTime - lastClickTime) > 60000) {  //  60000毫秒  =  1分钟
+            //  更新上次点击时间
+            lastClickTime = currentTime;
+            //  允许点击，进行正常操作
+            //  这里可以放置发送验证码的代码
+            document.getElementById('mailbox').addEventListener('click', function () {
+                const inputValue = document.getElementById('input-1').value;  // 获取输入框的值
+                fetch('/login/retrieve_view/', {
+                    method: 'POST',
+                    credentials: 'same-origin',  // 保持与当前页面相同的会话信息
+                    headers: {
+                        'X-CSRFToken': csrfToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({'input_value': inputValue})  //  发送输入框的值作为请求体
+                })
+            });
+        } else {
+            //  阻止默认的提交行为
+            event.preventDefault();
+            //  可以在这里添加提示用户的代码，例如：
+            alert('请等待一分钟后再尝试获取验证码。');
+        }
+        //  禁用按钮一分钟后重新启用
+        canClick = false;
+        setTimeout(function () {
+            canClick = true;
+        }, 60000);
+    });
+</script>
+</html>

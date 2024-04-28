@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     "login",
     "search",
     "Statistics",
-    "video",
     "django_apscheduler"
 ]
 

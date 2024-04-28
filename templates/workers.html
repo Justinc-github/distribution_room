@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{% static 'css/work_time.css' %}">
 {% endblock %}
 {% block body %}
+    <button type="button" class="btn  btn-success" id="export" style="color: white;position: absolute;
+               margin: -2% 0 0 93%;height: 36px;width: 84px;background:  #1964a4;">
+        <a href="/statistics/export_excel_time/" style="color: white">导出数据表</a>
+    </button>
     <div class="duty_officer" style="color: #0078d7">
         今日值班人员:
     </div>
@@ -21,4 +25,5 @@
         {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}

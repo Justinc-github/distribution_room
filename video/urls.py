@@ -3,5 +3,5 @@ from .views import *
 
 app_name = 'video'
 urlpatterns = [
-    path('', webcam_view, name='video'),
+    path('', video_feed, name='video_feed'),
 ]

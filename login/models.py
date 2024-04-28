@@ -7,4 +7,5 @@ class user_login(models.Model):
     password = models.CharField(verbose_name="密码",  max_length=64)
     name = models.CharField(verbose_name="姓名",  max_length=64)
     phone = models.CharField(verbose_name="电话",  max_length=64)
+    email = models.CharField(verbose_name="邮箱",  max_length=20)
 

@@ -12,6 +12,7 @@ class UserInfo(models.Model):
         (1, "女")
     )
     gender = models.SmallIntegerField(verbose_name="性别", choices=gender_choice)
+    email = models.CharField(verbose_name="邮箱", max_length=20)
 
     def __str__(self):
         return self.name
@@ -23,6 +24,3 @@ class work_time(models.Model):
 
     def __str__(self):
         return self.time
-
-
-

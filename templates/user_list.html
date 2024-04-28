@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="{% static 'css/user_list.css' %}">
 {% endblock %}
 {% block body %}
+    <button type="button" class="btn  btn-success" id="export" style="color: white;position: absolute;
+           margin: -3% 0 0 93%;height: 36px;width: 84px;background:  #1964a4;">
+        <a href="/statistics/export_excel_workers/" style="color: white">导出数据表</a>
+    </button>
     <table class="layui-table" style="color:white;width: 70%;margin-left: auto;margin-right: auto">
         <colgroup>
             <col width="150">
@@ -49,13 +53,14 @@
                    class="layui-laypage-prev" data-page="0" style="background:#173e5d;color: white">上一页</a>
             {% else %}
                 <a style="pointer-events:none;background:#173e5d;color: white"
-                   class="layui-laypage-prev layui-disabled" data-page="0" >上一页</a>
+                   class="layui-laypage-prev layui-disabled" data-page="0">上一页</a>
             {% endif %}
 
             {% for i in page_list %}
                 {% if i == page %}
                     <span id="page1" class="layui-laypage-curr"><em
-                            class="layui-laypage-em" style="background: #0078d7;color: white"></em><em>{{ i }}</em></span>
+                            class="layui-laypage-em"
+                            style="background: #0078d7;color: white"></em><em>{{ i }}</em></span>
                 {% else %}
                     <a href="{% url 'user:user_view' i %}" style="background:#173e5d;color: white">{{ i }}</a>
                 {% endif %}
@@ -67,7 +72,7 @@
                    class="layui-laypage-prev" data-page="0" style="background:#173e5d;color: white">下一页</a>
             {% else %}
                 <a style="pointer-events:none;background:#173e5d;color: white"
-                   class="layui-laypage-prev layui-disabled" data-page="0" >下一页</a>
+                   class="layui-laypage-prev layui-disabled" data-page="0">下一页</a>
             {% endif %}
         </div>
 

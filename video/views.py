@@ -1,35 +1,30 @@
-import time
-
 import cv2
 from django.http import StreamingHttpResponse
-from django.shortcuts import render
 
 
-def webcam_view(request):
-    return render(request, 'video.html')
-
-
-def webcam_feed(request):
-    url = "749839wx55.goho.co"
-    cap = cv2.VideoCapture(url)
-
-    if not cap.isOpened():
-        print("Error: Could not open camera.")
-        return
-
-    def generate_frames():
+#  将生成器函数定义在视图函数外部
+def video_frame_generator(ip, user, password):
+    cap = cv2.VideoCapture("rtsp://" + user + ":" + password + "@" + ip + ":554/h264/ch1/main/av_stream")
+    try:
         while True:
             ret, frame = cap.read()
-
             if not ret:
-                print("Error: Could not read frame.")
                 break
-
-            image = cv2.resize(frame, (640, 480))
-            _, buffer = cv2.imencode('.jpg', image)
-
-            frame = buffer.tobytes()
+            (flag, encodedImage) = cv2.imencode(".jpg", frame)
+            if not flag:
+                continue
             yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+                   b'Content-Type:  image/jpeg\r\n\r\n' + bytearray(encodedImage) + b'\r\n')
+    finally:
+        cap.release()
 
-    return StreamingHttpResponse(generate_frames(), content_type="multipa rt/x-mixed-replace;boundary=frame")
+
+def video_feed(request):
+    #  摄像头配置
+    ip = '192.168.1.64'
+    user = 'admin'
+    password = 'yu20021014..'
+
+    #  返回流响应
+    return StreamingHttpResponse(video_frame_generator(ip, user, password),
+                                 content_type="multipart/x-mixed-replace;boundary=frame")

@@ -6,6 +6,12 @@
     <script type="text/javascript" src="{% static 'js/echarts.min.js' %}"></script>
 {% endblock %}
 {% block body %}
+
+    <div id="data-tem" style="position: absolute; color: red;font-size: 25px;margin: -3.8% 0 0 74%;"></div>
+    <button type="button" class="btn  btn-success" id="export" style="color: white;position: absolute;
+               margin: -3% 0 0 93%; height: 36px;width: 84px;background:  #1964a4;">
+        <a href="/statistics/export_excel_values/" style="color: white">导出数据表</a>
+    </button>
     <header class="header">实时监控</header>
     <div class="container">
         <div class="box1">
@@ -42,6 +48,8 @@
                 <div id="main2" style="height:30vh;"></div>
             </div>
         </div>
+
+
     </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <script type="text/javascript">
@@ -236,5 +244,27 @@
             }, 5000);  // 5秒
         });
     </script>
-
+    <script>
+        //  使用  Fetch  API  获取数据
+        fetch('/statistics/get-latest-data/')  //  替换  '/my-view-url/'  为你的视图  URL
+            .then(response => response.json())  //  解析  JSON  数据
+            .then(data => {
+                //  假设你要显示所有的键值对
+                const keyMapping = {
+                    'tem': '当前温度',
+                    'humidity': '当前湿度'
+                };
+                let output = '';
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        //  使用映射的键名，如果不存在则使用原始键名
+                        const displayKey = keyMapping[key] || key;
+                        output += `<p>${displayKey}:  ${data[key]}</p>`;
+                    }
+                }
+                //  将数据插入到页面中
+                document.getElementById('data-tem').innerHTML = output;
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
 {% endblock %}
