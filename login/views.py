@@ -213,8 +213,8 @@ def generate_verification():
 
 
 def send_email(receivers, subject, content):
-    sender = '1927705375@qq.com'
-    password = 'sfjqdvsfmybdchah'
+    sender = '3930459282@qq.com'
+    password = 'aybklgfpyzcjcgac'
     try:
         msg = MIMEText(content, 'plain', 'utf-8')
         msg['From'] = formataddr(('管理系统', sender))

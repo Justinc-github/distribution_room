@@ -82,9 +82,9 @@ DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',  # 使用mysql引擎
         'NAME': 'distribution_room',  # 链接数据库的名称
-        'USER': 'justinc',  # 数据库的用户名
-        'PASSWORD': '123123',  # 数据库密码
-        'HOST': '42.193.123.49',  # 链接主机
+        'USER': 'root',  # 数据库的用户名
+        'PASSWORD': 'SJCsjc3015',  # 数据库密码
+        'HOST': '127.0.0.1',  # 链接主机
         'PORT': '3306',  # 链接接端口
     }
 }
